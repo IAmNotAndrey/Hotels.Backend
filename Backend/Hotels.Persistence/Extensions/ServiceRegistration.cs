@@ -32,7 +32,7 @@ public static class ServiceRegistration
         services.AddTransient<IAdminRepo, AdminRepo>();
         services.AddTransient<IObjectComfortRepo, ObjectComfortRepo>();
         services.AddTransient<ISubobjectComfortRepo, SubobjectComfortRepo>();
-        services.AddTransient<IBathroomRepo, BathroomRepo>();
+        services.AddTransient<IBathroomService, BathroomService>();
         services.AddTransient<IObjectFeedRepo, ObjectFeedRepo>();
         services.AddTransient<IToiletRepo, ToiletRepo>();
         services.AddTransient<IWeekRateRepo, WeekRateRepo>();
