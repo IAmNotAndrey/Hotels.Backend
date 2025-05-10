@@ -4,11 +4,11 @@ using Hotels.Persistence.Interfaces.Repositories;
 
 namespace Hotels.Infrastructure.Services;
 
-public class TravelAgentSubscriptionRepo : ITravelAgentSubscriptionService
+public class TravelAgentSubscriptionService : ITravelAgentSubscriptionService
 {
     private readonly IGenericRepo<TravelAgentSubscription, Guid> _repo;
 
-    public TravelAgentSubscriptionRepo(IGenericRepo<TravelAgentSubscription, Guid> repo)
+    public TravelAgentSubscriptionService(IGenericRepo<TravelAgentSubscription, Guid> repo)
     {
         _repo = repo;
     }
