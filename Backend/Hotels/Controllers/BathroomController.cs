@@ -4,11 +4,11 @@
 [ApiController]
 public class BathroomController : ApplicationControllerBase<Bathroom, Guid, BathroomDto, BathroomDtoB>
 {
-    private readonly IApplicationUserRepo _appUserRepo;
+    private readonly IApplicationUserService _appUserRepo;
     private readonly IGenericRepo<Subobject, Guid> _subobjectRepo;
     private readonly IBathroomRepo _bathroomRepo;
 
-    public BathroomController(IApplicationUserRepo appUserRepo,
+    public BathroomController(IApplicationUserService appUserRepo,
                               IGenericRepo<Subobject, Guid> subobjectRepo,
                               IBathroomRepo bathroomRepo,
                               IGenericRepo<Bathroom, Guid> repo) : base(repo)

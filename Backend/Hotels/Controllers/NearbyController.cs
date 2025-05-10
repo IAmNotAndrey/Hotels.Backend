@@ -4,12 +4,12 @@
 [ApiController]
 public class NearbyController : ApplicationControllerBase<Nearby, Guid, NearbyDto, NearbyDtoB>
 {
-    private readonly IApplicationUserRepo _appUserRepo;
+    private readonly IApplicationUserService _appUserRepo;
     private readonly INearbyRepo _nearbyRepo;
     private readonly IGenericRepo<CountrySubject, Guid> _countrySubjectRepo;
     private readonly IGenericRepo<Partner, string> _partnerRepo;
 
-    public NearbyController(IApplicationUserRepo appUserRepo,
+    public NearbyController(IApplicationUserService appUserRepo,
                             IGenericRepo<Nearby, Guid> repo,
                             INearbyRepo nearbyRepo,
                             IGenericRepo<CountrySubject, Guid> countrySubjectRepo,

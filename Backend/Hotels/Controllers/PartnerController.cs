@@ -8,12 +8,12 @@ public class PartnerController : ControllerBase
 
     private readonly UserManager<Partner> _userManager;
     private readonly IPartnerRepo _partnerRepo;
-    private readonly IApplicationUserRepo _appUserRepo;
+    private readonly IApplicationUserService _appUserRepo;
     private readonly IGenericRepo<Partner, string> _partnerGenRepo;
 
     public PartnerController(UserManager<Partner> userManager,
                              IPartnerRepo partnerRepo,
-                             IApplicationUserRepo appUserRepo,
+                             IApplicationUserService appUserRepo,
                              IGenericRepo<Partner, string> partnerGenRepo)
     {
         _userManager = userManager;

@@ -5,11 +5,11 @@
 public class ObjectComfortController : ApplicationControllerBase<ObjectComfort, Guid, ObjectComfortDto, ObjectComfortDtoB>
 {
     private readonly IGenericRepo<Partner, string> _partnerRepo;
-    private readonly IApplicationUserRepo _appUserRepo;
+    private readonly IApplicationUserService _appUserRepo;
     private readonly IObjectComfortRepo _objectComfortRepo;
 
     public ObjectComfortController(IGenericRepo<Partner, string> partnerRepo,
-                                   IApplicationUserRepo appUserRepo,
+                                   IApplicationUserService appUserRepo,
                                    IObjectComfortRepo objectComfortRepo,
                                    IGenericRepo<ObjectComfort, Guid> repo) : base(repo)
     {

@@ -5,12 +5,12 @@
 public class TourController : ApplicationControllerBase<Tour, Guid, TourDto, TourDtoB>
 {
     private readonly ITourRepo _tourRepo;
-    private readonly IApplicationUserRepo _appUserRepo;
+    private readonly IApplicationUserService _appUserRepo;
     private readonly IGenericRepo<TravelAgent, string> _travelAgentRepo;
     private readonly IGenericRepo<CountrySubject, Guid> _countrySubjectRepo;
 
     public TourController(ITourRepo tourRepo,
-                          IApplicationUserRepo appUserRepo,
+                          IApplicationUserService appUserRepo,
                           IGenericRepo<TravelAgent, string> travelAgentRepo,
                           IGenericRepo<CountrySubject, Guid> countrySubjectRepo,
                           IGenericRepo<Tour, Guid> repo) : base(repo)

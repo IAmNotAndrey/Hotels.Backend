@@ -7,7 +7,7 @@ public class BookingController : ApplicationControllerBase<Booking, Guid, Bookin
     private readonly ApplicationContext _db;
     private readonly IPaymentService<string> _paymentService;
     private readonly IMapper _mapper;
-    private readonly IApplicationUserRepo _appUserRepo;
+    private readonly IApplicationUserService _appUserRepo;
     private readonly ISubobjectRepo _subobjectRepo;
     private readonly IBookingRepo _bookingRepo;
     private readonly IGenericRepo<Subobject, Guid> _genSubobjectRepo;
@@ -15,7 +15,7 @@ public class BookingController : ApplicationControllerBase<Booking, Guid, Bookin
     public BookingController(ApplicationContext db,
                              IPaymentService<string> yooKassaService,
                              IMapper mapper,
-                             IApplicationUserRepo appUserRepo,
+                             IApplicationUserService appUserRepo,
                              ISubobjectRepo subobjectRepo,
                              IBookingRepo bookingRepo,
                              IGenericRepo<Subobject, Guid> genSubobjectRepo,

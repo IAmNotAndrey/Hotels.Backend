@@ -5,10 +5,10 @@
 public class TravelAgentSubscriptionController : ApplicationControllerBase<TravelAgentSubscription, Guid, TravelAgentSubscriptionDto, object>
 {
     private readonly ITravelAgentSubscriptionRepo _taSubscriptionRepo;
-    private readonly IApplicationUserRepo _appUserRepo;
+    private readonly IApplicationUserService _appUserRepo;
 
     public TravelAgentSubscriptionController(ITravelAgentSubscriptionRepo taSubscriptionRepo,
-                                             IApplicationUserRepo appUserRepo,
+                                             IApplicationUserService appUserRepo,
                                              IGenericRepo<TravelAgentSubscription, Guid> repo) : base(repo)
     {
         _taSubscriptionRepo = taSubscriptionRepo;

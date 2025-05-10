@@ -5,11 +5,11 @@
 public class RoomController : ApplicationControllerBase<Room, Guid, RoomDto, RoomDtoB>
 {
     private readonly IRoomRepo _roomRepo;
-    private readonly IApplicationUserRepo _appUserRepo;
+    private readonly IApplicationUserService _appUserRepo;
     private readonly IGenericRepo<Partner, string> _partnerRepo;
 
     public RoomController(IRoomRepo roomRepo,
-                          IApplicationUserRepo appUserRepo,
+                          IApplicationUserService appUserRepo,
                           IGenericRepo<Partner, string> partnerRepo,
                           IGenericRepo<Room, Guid> repo) : base(repo)
     {

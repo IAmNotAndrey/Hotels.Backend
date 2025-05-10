@@ -6,9 +6,9 @@ public class TouristController : ControllerBase
 {
     private readonly ITouristRepo _touristRepo;
     private readonly IGenericRepo<Tourist, string> _repo;
-    private readonly IApplicationUserRepo _appUserRepo;
+    private readonly IApplicationUserService _appUserRepo;
 
-    public TouristController(ITouristRepo touristRepo, IGenericRepo<Tourist, string> repo, IApplicationUserRepo appUserRepo)
+    public TouristController(ITouristRepo touristRepo, IGenericRepo<Tourist, string> repo, IApplicationUserService appUserRepo)
     {
         _touristRepo = touristRepo;
         _repo = repo;

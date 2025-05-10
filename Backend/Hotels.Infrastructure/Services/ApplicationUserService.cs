@@ -1,16 +1,16 @@
 ﻿using Hotels.Application.Exceptions;
+using Hotels.Application.Interfaces.Services;
 using Hotels.Domain.Entities.Users;
-using Hotels.Persistence.Interfaces.Repositories;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
-namespace Hotels.Persistence.Repositories;
+namespace Hotels.Infrastructure.Services;
 
-public class ApplicationUserRepo : IApplicationUserRepo
+public class ApplicationUserService : IApplicationUserService
 {
     private readonly UserManager<ApplicationUser> _appUM;
 
-    public ApplicationUserRepo(UserManager<ApplicationUser> appUM)
+    public ApplicationUserService(UserManager<ApplicationUser> appUM)
     {
         _appUM = appUM;
     }

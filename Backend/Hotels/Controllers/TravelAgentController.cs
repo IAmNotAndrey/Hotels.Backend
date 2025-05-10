@@ -5,11 +5,11 @@
 public class TravelAgentController : ControllerBase
 {
     private readonly ITravelAgentRepo _travelAgentRepo;
-    private readonly IApplicationUserRepo _appUserRepo;
+    private readonly IApplicationUserService _appUserRepo;
     private readonly IGenericRepo<TravelAgent, string> _repo;
 
     public TravelAgentController(ITravelAgentRepo travelAgentRepo,
-                                 IApplicationUserRepo appUserRepo,
+                                 IApplicationUserService appUserRepo,
                                  IGenericRepo<TravelAgent, string> repo)
     {
         _travelAgentRepo = travelAgentRepo;
