@@ -2,17 +2,16 @@
 using Hotels.Application.Interfaces.Services;
 using Hotels.Domain.Entities.Subobjects;
 using Hotels.Persistence.Contexts;
-using Hotels.Persistence.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace Hotels.Persistence.Repositories;
+namespace Hotels.Infrastructure.Services;
 
-public class SubobjectRepo : ISubobjectRepo
+public class SubobjectService : ISubobjectService
 {
     private readonly ApplicationContext _db;
     private readonly IBookingService _bookingRepo;
 
-    public SubobjectRepo(ApplicationContext db, IBookingService bookingRepo)
+    public SubobjectService(ApplicationContext db, IBookingService bookingRepo)
     {
         _db = db;
         _bookingRepo = bookingRepo;

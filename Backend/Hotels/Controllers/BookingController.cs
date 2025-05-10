@@ -8,7 +8,7 @@ public class BookingController : ApplicationControllerBase<Booking, Guid, Bookin
     private readonly IPaymentService<string> _paymentService;
     private readonly IMapper _mapper;
     private readonly IApplicationUserService _appUserRepo;
-    private readonly ISubobjectRepo _subobjectRepo;
+    private readonly ISubobjectService _subobjectRepo;
     private readonly IBookingService _bookingRepo;
     private readonly IGenericRepo<Subobject, Guid> _genSubobjectRepo;
 
@@ -16,7 +16,7 @@ public class BookingController : ApplicationControllerBase<Booking, Guid, Bookin
                              IPaymentService<string> yooKassaService,
                              IMapper mapper,
                              IApplicationUserService appUserRepo,
-                             ISubobjectRepo subobjectRepo,
+                             ISubobjectService subobjectRepo,
                              IBookingService bookingRepo,
                              IGenericRepo<Subobject, Guid> genSubobjectRepo,
                              IGenericRepo<Booking, Guid> repo

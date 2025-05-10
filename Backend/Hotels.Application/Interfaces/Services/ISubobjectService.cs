@@ -1,8 +1,8 @@
 ﻿using Hotels.Application.Exceptions;
 
-namespace Hotels.Persistence.Interfaces.Repositories;
+namespace Hotels.Application.Interfaces.Services;
 
-public interface ISubobjectRepo
+public interface ISubobjectService
 {
     /// <summary>
     /// Вычисляет стоимость бронирования для указанного подобъекта на основе заданного интервала дат.

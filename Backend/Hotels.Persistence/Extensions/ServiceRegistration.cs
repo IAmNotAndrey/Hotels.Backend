@@ -18,7 +18,7 @@ public static class ServiceRegistration
         services.AddTransient<ITourRepo, TourRepo>();
         services.AddTransient<ITravelAgentRepo, TravelAgentRepo>();
         services.AddTransient<IApplicationUserService, ApplicationUserService>();
-        services.AddTransient<ISubobjectRepo, SubobjectRepo>();
+        services.AddTransient<ISubobjectService, SubobjectService>();
         services.AddTransient<IBookingService, BookingService>();
         services.AddTransient<ITravelAgentSubscriptionRepo, TravelAgentSubscriptionRepo>();
         services.AddTransient<ISmsSender, SmsAeroSenderService>();
