@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Hotels.Application.Dtos.Users;
-using Hotels.Application.Exceptions;
 using Hotels.Domain.Entities.Users;
 using Hotels.Domain.Enums;
 using Hotels.Persistence.Contexts;

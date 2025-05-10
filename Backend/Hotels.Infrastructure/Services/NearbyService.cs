@@ -28,10 +28,10 @@ public class NearbyService : INearbyService
     private readonly string _imageDirPath;
     private readonly HashSet<string> _imageSupportedExtensions;
 
-    public NearbyService(ApplicationContext db, 
-                         IWebHostEnvironment environment, 
-                         ILogger<NearbyRepo> logger, 
-                         IStaticFilesService staticFilesService, 
+    public NearbyService(ApplicationContext db,
+                         IWebHostEnvironment environment,
+                         ILogger<NearbyRepo> logger,
+                         IStaticFilesService staticFilesService,
                          IConfiguration configuration)
     {
         _db = db;
