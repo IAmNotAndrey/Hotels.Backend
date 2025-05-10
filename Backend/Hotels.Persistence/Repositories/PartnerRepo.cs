@@ -13,7 +13,7 @@ namespace Hotels.Persistence.Repositories;
 
 public class PartnerRepo : IPartnerRepo
 {
-    private ApplicationContext _db;
+    private readonly ApplicationContext _db;
     private readonly IGenericRepo<Partner, string> _repo;
     private readonly IMapper _mapper;
 
@@ -85,36 +85,6 @@ public class PartnerRepo : IPartnerRepo
         return dtos;
     }
 
-    public bool IsValidForModeration(Partner partner, out List<string> validationErrors)
-    {
-        // fixme неправильная валидация
-        validationErrors = [];
-
-        // Проверка необходимых полей
-        if (string.IsNullOrWhiteSpace(partner.Name))
-        {
-            validationErrors.Add($"{nameof(partner.Name)} is required.");
-        }
-        if (partner.TypeId == null)
-        {
-            validationErrors.Add($"{nameof(partner.TypeId)} is required.");
-        }
-        if (partner.CityId == null)
-        {
-            validationErrors.Add($"{nameof(partner.CityId)} is required.");
-        }
-        if (partner.TypeId == null)
-        {
-            validationErrors.Add($"At least one of {nameof(partner.Contacts)} is required.");
-        }
-        if (partner.Contacts.Count == 0)
-        {
-            validationErrors.Add($"At least one of {nameof(partner.Contacts)} is required.");
-        }
-
-        return validationErrors.Count == 0;
-    }
-
     public async Task UpdateAsync(string id, PartnerDtoB dtoB)
     {
         Partner partner = _mapper.Map<Partner>(dtoB);
@@ -123,13 +93,7 @@ public class PartnerRepo : IPartnerRepo
         await _repo.UpdateAsync(partner);
     }
 
-    public async Task SetToModerateAsync(string id)
-    {
-        Partner partner = await _repo.GetByIdOrDefaultAsync(id, asNoTracking: false)
-            ?? throw new EntityNotFoundException($"{nameof(Partner)} wasn't found");
-        partner.AccountStatus = AccountStatus.OnModeration;
-        await _db.SaveChangesAsync();
-    }
+
 
     public async Task<IEnumerable<PartnerDto>> GetDtosIncludedAdvertisingAsync(Guid countrySubjectId)
     {
