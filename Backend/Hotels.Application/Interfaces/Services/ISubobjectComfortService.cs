@@ -1,8 +1,8 @@
 ﻿using Hotels.Application.Exceptions;
 
-namespace Hotels.Persistence.Interfaces.Repositories;
+namespace Hotels.Application.Interfaces.Services;
 
-public interface ISubobjectComfortRepo
+public interface ISubobjectComfortService
 {
     /// <exception cref="EntityNotFoundException"></exception>
     /// <exception cref="InvalidOperationException"></exception>
