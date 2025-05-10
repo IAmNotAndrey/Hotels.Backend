@@ -34,7 +34,7 @@ public static class ServiceRegistration
         services.AddTransient<ISubobjectComfortService, SubobjectComfortService>();
         services.AddTransient<IBathroomService, BathroomService>();
         services.AddTransient<IObjectFeedService, ObjectFeedService>();
-        services.AddTransient<IToiletRepo, ToiletRepo>();
+        services.AddTransient<IToiletService, ToiletService>();
         services.AddTransient<IWeekRateRepo, WeekRateRepo>();
         services.AddTransient<IImageStorageRepo, ImageStorageRepo>();
         services.AddTransient(typeof(IGenericRepo<,>), typeof(GenericRepo<,>));

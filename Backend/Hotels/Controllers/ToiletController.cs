@@ -5,11 +5,11 @@
 public class ToiletController : ApplicationControllerBase<Toilet, Guid, ToiletDto, ToiletDtoB>
 {
     private readonly IApplicationUserService _appUserRepo;
-    private readonly IToiletRepo _toiletRepo;
+    private readonly IToiletService _toiletRepo;
     private readonly IGenericRepo<Subobject, Guid> _subobjectRepo;
 
     public ToiletController(IApplicationUserService appUserRepo,
-                            IToiletRepo toiletRepo,
+                            IToiletService toiletRepo,
                             IGenericRepo<Subobject, Guid> subobjectRepo,
                             IGenericRepo<Toilet, Guid> repo) : base(repo)
     {
