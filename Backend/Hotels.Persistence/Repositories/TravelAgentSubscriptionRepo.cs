@@ -26,18 +26,11 @@ public class TravelAgentSubscriptionRepo : ITravelAgentSubscriptionRepo
         return dtos;
     }
 
-    public async Task<TravelAgentSubscription> CreateAsync(string travelAgentId, Guid paidServiceId)
-    {
-        TravelAgentSubscription sub = new() { TravelAgentId = travelAgentId, PaidServiceId = paidServiceId };
-        return await _repo.AddAsync(sub);
-    }
-
     private static IQueryable<TravelAgentSubscription> IncludeRelations(IQueryable<TravelAgentSubscription> query)
     {
         return query
             .AsNoTracking()
             .AsSplitQuery()
             .Include(e => e.PaidService);
-
     }
 }
