@@ -1,9 +1,9 @@
 ﻿using Hotels.Application.Exceptions;
 using Hotels.Domain.Entities;
 
-namespace Hotels.Persistence.Interfaces.Repositories;
+namespace Hotels.Application.Interfaces.Services;
 
-public interface IBookingRepo
+public interface IBookingService
 {
     /// <summary>
     ///  Checks if the booking (<paramref name="bookingId"/>) dates conflict with the specified <paramref name="startDate"/> and <paramref name="endDate"/>.

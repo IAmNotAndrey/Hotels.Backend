@@ -1,4 +1,5 @@
 ﻿using Hotels.Application.Exceptions;
+using Hotels.Application.Interfaces.Services;
 using Hotels.Domain.Entities.Subobjects;
 using Hotels.Persistence.Contexts;
 using Hotels.Persistence.Interfaces.Repositories;
@@ -9,9 +10,9 @@ namespace Hotels.Persistence.Repositories;
 public class SubobjectRepo : ISubobjectRepo
 {
     private readonly ApplicationContext _db;
-    private readonly IBookingRepo _bookingRepo;
+    private readonly IBookingService _bookingRepo;
 
-    public SubobjectRepo(ApplicationContext db, IBookingRepo bookingRepo)
+    public SubobjectRepo(ApplicationContext db, IBookingService bookingRepo)
     {
         _db = db;
         _bookingRepo = bookingRepo;
