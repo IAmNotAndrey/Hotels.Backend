@@ -4,14 +4,14 @@
 [ApiController]
 public class StaticFileController : ControllerBase
 {
-    private readonly ICafeRepo _cafeRepo;
+    private readonly ICafeService _cafeRepo;
     private readonly IGenericRepo<CafeMenuFileLink, Guid> _cafeMenuFileLinkRepo;
     private readonly INearbyRepo _nearbyRepo;
     private readonly IGenericRepo<Nearby, Guid> _genNearbyRepo;
     private readonly IGenericRepo<Cafe, Guid> _genCafeRepo;
     private readonly IGenericRepo<NearbyImageLink, Guid> _nearbyImageLinkRepo;
 
-    public StaticFileController(ICafeRepo cafeRepo,
+    public StaticFileController(ICafeService cafeRepo,
                                 IGenericRepo<CafeMenuFileLink, Guid> cafeMenuFileLinkRepo,
                                 INearbyRepo nearbyRepo,
                                 IGenericRepo<Nearby, Guid> genNearbyRepo,

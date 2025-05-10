@@ -1,21 +1,18 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
-using Hotels.Application.Dtos;
 using Hotels.Application.Interfaces.Services;
 using Hotels.Domain.Entities;
 using Hotels.Domain.Entities.StaticFiles;
 using Hotels.Persistence.Contexts;
-using Hotels.Persistence.Interfaces.Repositories;
-using Hotels.Presentation.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Hotels.Persistence.Repositories;
+namespace Hotels.Infrastructure.Services;
 
-public class CafeRepo : ICafeRepo
+public class CafeService : ICafeService
 {
     private const string ConfigKeyStaticFilesDirPath = "StaticFiles:DirectoryPath";
     private const string ConfigKeyMenuDirPath = "StaticFiles:CafeMenu:DirectoryPath";
@@ -30,7 +27,7 @@ public class CafeRepo : ICafeRepo
     private readonly string _menuDirPath;
     private readonly HashSet<string> _menuSupportedExtensions;
 
-    public CafeRepo(ApplicationContext db, IMapper mapper, IStaticFilesService staticFilesService, IWebHostEnvironment environment, IConfiguration configuration, ILogger<CafeRepo> logger)
+    public CafeService(ApplicationContext db, IMapper mapper, IStaticFilesService staticFilesService, IWebHostEnvironment environment, IConfiguration configuration, ILogger<CafeService> logger)
     {
         _db = db;
         _mapper = mapper;
@@ -52,55 +49,6 @@ public class CafeRepo : ICafeRepo
         _menuSupportedExtensions = supportedMenuFileExtensions.Get<List<string>>()?.ToHashSet()
             ?? throw new InvalidOperationException("SupportedExtensions section is missing or invalid.");
     }
-
-    //public async Task<bool> ExistsAsync(Guid id)
-    //{
-    //	var cafe = await _db.Cafes.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
-    //	return cafe != null;
-    //}
-
-    public async Task<IEnumerable<CafeDto>> GetDtosAsync()
-    {
-        var cafes = await _db.Cafes
-            .AsNoTracking()
-            .AsSplitQuery()
-            .Include(e => e.Contacts)
-            .Include(e => e.ImageLinks)
-            .Include(e => e.Menu)
-            .ToArrayAsync();
-        var dtos = cafes.Select(e => _mapper.Map<CafeDto>(e));
-        return dtos;
-    }
-
-    /*
-	public async Task<Cafe> CreateAsync(CafeDtoB dto)
-	{
-		CountrySubject countrySubject = await _db.CountrySubjects.FirstOrDefaultAsync(e => e.Id == dto.CountrySubjectId)
-			?? throw new EntityNotFoundException($"{nameof(CountrySubject)} wasn't found by id '{dto.CountrySubjectId}'");
-
-		Cafe cafe = _mapper.Map<Cafe>(dto);
-		await _db.Cafes.AddAsync(cafe);
-		await _db.SaveChangesAsync();
-
-		return cafe;
-	}
-	public async Task UpdateAsync(Guid id, CafeDtoB dto)
-	{
-		Cafe cafe = await _db.Cafes
-			.FirstOrDefaultAsync(e => e.Id == id)
-			?? throw new ArgumentException($"{nameof(Cafe)} wasn't found by id '{id}'", nameof(id));
-		_mapper.Map(dto, cafe);
-		await _db.SaveChangesAsync();
-	}
-
-	public async Task DeleteAsync(Guid id)
-	{
-		var cafe = await _db.Cafes.FirstOrDefaultAsync(e => e.Id == id)
-			?? throw new ArgumentException($"{nameof(Cafe)} wasn't found by id '{id}'", nameof(id));
-		_db.Cafes.Remove(cafe);
-		await _db.SaveChangesAsync();
-	}
-	*/
 
     public async Task SaveMenuFileAsync(Guid id, IFormFile menuFile)
     {
@@ -127,57 +75,9 @@ public class CafeRepo : ICafeRepo
         await _db.SaveChangesAsync();
     }
 
-    #region Menu
-
-    /*
-	public async Task<bool> MenuExistsAsync(Guid menuId)
-	{
-		var cafe = await _db.CafeMenuFileLinks.AsNoTracking().FirstOrDefaultAsync(e => e.Id == menuId);
-		return cafe != null;
-	}
-	public async Task DeleteMenuAsync(Guid menuId)
-	{
-		CafeMenuFileLink menu = await _db.CafeMenuFileLinks.FirstOrDefaultAsync(e => e.Id == menuId)
-			?? throw new EntityNotFoundException($"{nameof(CafeMenuFileLink)} wasn't found by id '{menuId}'"); ;
-
-		_db.CafeMenuFileLinks.Remove(menu);
-		await _db.SaveChangesAsync();
-	}
-	*/
-
-    #endregion
-
     private bool IsSupportedFileType(string fileName)
     {
         var extension = Path.GetExtension(fileName);
         return _menuSupportedExtensions.Contains(extension);
-    }
-
-    public async Task<IEnumerable<CafeDto>> GetByFilterAsync(IFilterModel<Cafe> filter)
-    {
-        var dtos = await _db.Cafes
-            .AsNoTracking()
-            .AsSplitQuery()
-            .Include(e => e.Contacts)
-            .Include(e => e.ImageLinks)
-            .Include(e => e.Menu)
-            .Where(filter.FilterExpression)
-            .Select(e => _mapper.Map<CafeDto>(e))
-            .ToArrayAsync();
-        return dtos;
-    }
-
-    public async Task<CafeDto> GetDtoAsync(Guid id)
-    {
-        Cafe cafe = await _db.Cafes
-            .AsNoTracking()
-            .AsNoTracking()
-            .AsSplitQuery()
-            .Include(e => e.Contacts)
-            .Include(e => e.ImageLinks)
-            .Include(e => e.Menu)
-            .FirstAsync(e => e.Id == id);
-        CafeDto dto = _mapper.Map<CafeDto>(cafe);
-        return dto;
     }
 }

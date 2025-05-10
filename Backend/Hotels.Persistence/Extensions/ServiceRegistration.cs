@@ -25,7 +25,7 @@ public static class ServiceRegistration
         services.AddTransient<ICountrySubjectRepo, CountrySubjectRepo>();
         services.AddTransient<IRoomRepo, RoomRepo>();
         services.AddTransient<IAttractionRepo, AttractionRepo>();
-        services.AddTransient<ICafeRepo, CafeRepo>();
+        services.AddTransient<ICafeService, CafeService>();
         services.AddTransient<ICityRepo, CityRepo>();
         services.AddTransient<INearbyRepo, NearbyRepo>();
         services.AddTransient<ICafeSubscriptionRepo, CafeSubscriptionRepo>();
