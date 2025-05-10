@@ -1,8 +1,8 @@
 ﻿using Hotels.Application.Exceptions;
 
-namespace Hotels.Persistence.Interfaces.Repositories;
+namespace Hotels.Application.Interfaces.Services;
 
-public interface IObjectFeedRepo
+public interface IObjectFeedService
 {
     /// <exception cref="EntityNotFoundException"></exception>
     /// <exception cref="InvalidOperationException"></exception>

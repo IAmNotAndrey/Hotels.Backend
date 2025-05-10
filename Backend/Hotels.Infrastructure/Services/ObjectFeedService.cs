@@ -1,16 +1,16 @@
-﻿using Hotels.Domain.Entities.Feeds;
+﻿using Hotels.Application.Interfaces.Services;
+using Hotels.Domain.Entities.Feeds;
 using Hotels.Domain.Entities.Users;
 using Hotels.Persistence.Contexts;
-using Hotels.Persistence.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace Hotels.Persistence.Repositories;
+namespace Hotels.Infrastructure.Services;
 
-public class ObjectFeedRepo : IObjectFeedRepo
+public class ObjectFeedService : IObjectFeedService
 {
     private readonly ApplicationContext _db;
 
-    public ObjectFeedRepo(ApplicationContext db)
+    public ObjectFeedService(ApplicationContext db)
     {
         _db = db;
     }
