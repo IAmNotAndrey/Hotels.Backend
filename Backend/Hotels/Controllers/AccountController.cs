@@ -10,13 +10,15 @@ public class AccountController : ControllerBase
     private readonly IAdminRepo _adminRepo;
     private readonly UserManager<Admin> _adminUM;
     private readonly SignInManager<Admin> _adminSIM;
+    private readonly IAdminService _adminService;
 
     public AccountController(ISmsSender smsSender,
                              UserManager<Tourist> touristUM,
                              SignInManager<Tourist> touristSIM,
                              IAdminRepo adminRepo,
                              UserManager<Admin> adminUM,
-                             SignInManager<Admin> adminSIM)
+                             SignInManager<Admin> adminSIM,
+                             IAdminService adminService)
     {
         _smsSender = smsSender;
         _touristUM = touristUM;
@@ -24,6 +26,7 @@ public class AccountController : ControllerBase
         _adminRepo = adminRepo;
         _adminUM = adminUM;
         _adminSIM = adminSIM;
+        _adminService = adminService;
     }
 
     /// <summary>
@@ -155,7 +158,7 @@ public class AccountController : ControllerBase
     [Authorize(Roles = nameof(Admin))]
     public async Task<IActionResult> AdminRegister([Required, EmailAddress] string email, [Required] string password)
     {
-        await _adminRepo.CreateAsync(email, password);
+        await _adminService.CreateAsync(email, password);
         return Ok();
     }
 
@@ -163,7 +166,7 @@ public class AccountController : ControllerBase
     [Authorize(Roles = nameof(Admin))]
     public async Task<IActionResult> AdminDelete(string id)
     {
-        await _adminRepo.DeleteAsync(id);
+        await _adminService.DeleteAsync(id);
         return Ok();
     }
 

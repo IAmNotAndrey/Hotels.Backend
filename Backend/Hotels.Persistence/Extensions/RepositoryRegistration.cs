@@ -8,23 +8,24 @@ public static class RepositoryRegistration
 {
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddTransient<IPartnerRepo, PartnerRepo>();
-        services.AddTransient<ITouristRepo, TouristRepo>();
+        services.AddTransient<IAdminRepo, AdminRepo>();
+        services.AddTransient<IAttractionRepo, AttractionRepo>();
+        services.AddTransient<ICafeSubscriptionRepo, CafeSubscriptionRepo>();
+        services.AddTransient<ICityRepo, CityRepo>();
+        services.AddTransient<ICountrySubjectRepo, CountrySubjectRepo>();
+        services.AddTransient(typeof(IGenericRepo<,>), typeof(GenericRepo<,>));
         services.AddTransient<IHousingRepo, HousingRepo>();
+        services.AddTransient<IImageRepo, ImageRepo>();
+        services.AddTransient<IImageStorageRepo, ImageStorageRepo>();
+        services.AddTransient<INearbyRepo, NearbyRepo>();
+        services.AddTransient<IPartnerRepo, PartnerRepo>();
         services.AddTransient<IReviewRepo, ReviewRepo>();
+        services.AddTransient<IRoomRepo, RoomRepo>();
+        services.AddTransient<ITouristRepo, TouristRepo>();
         services.AddTransient<ITourRepo, TourRepo>();
         services.AddTransient<ITravelAgentRepo, TravelAgentRepo>();
         services.AddTransient<ITravelAgentSubscriptionRepo, TravelAgentSubscriptionRepo>();
-        services.AddTransient<ICountrySubjectRepo, CountrySubjectRepo>();
-        services.AddTransient<IRoomRepo, RoomRepo>();
-        services.AddTransient<IAttractionRepo, AttractionRepo>();
-        services.AddTransient<ICityRepo, CityRepo>();
-        services.AddTransient<INearbyRepo, NearbyRepo>();
-        services.AddTransient<ICafeSubscriptionRepo, CafeSubscriptionRepo>();
-        services.AddTransient<IAdminRepo, AdminRepo>();
         services.AddTransient<IWeekRateRepo, WeekRateRepo>();
-        services.AddTransient<IImageStorageRepo, ImageStorageRepo>();
-        services.AddTransient(typeof(IGenericRepo<,>), typeof(GenericRepo<,>));
 
         return services;
     }

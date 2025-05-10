@@ -1,7 +1,5 @@
 ﻿using Hotels.Application.Interfaces.Services;
 using Hotels.Infrastructure.Services;
-using Hotels.Persistence.Interfaces.Repositories;
-using Hotels.Persistence.Repositories;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +12,7 @@ public static class ServiceRegistration
         services.AddTransient<IAdminService, AdminService>();
         services.AddTransient<IApplicationUserService, ApplicationUserService>();
         services.AddTransient<IBathroomService, BathroomService>();
+        services.AddTransient<IBookingService, BookingService>();
         services.AddTransient<ICafeService, CafeService>();
         services.AddTransient<ICafeSubscriptionService, CafeSubscriptionService>();
         services.AddTransient<IEmailSender, EmailSenderService>();
@@ -28,8 +27,6 @@ public static class ServiceRegistration
         services.AddTransient<IToiletService, ToiletService>();
         services.AddTransient<ITravelAgentSubscriptionService, TravelAgentSubscriptionService>();
         services.AddScoped<IPaymentService<string>, YooKassaService>();
-
-        services.AddTransient<IImageRepo, ImageRepo>();
 
         return services;
     }

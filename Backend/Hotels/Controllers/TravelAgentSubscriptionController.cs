@@ -6,13 +6,16 @@ public class TravelAgentSubscriptionController : ApplicationControllerBase<Trave
 {
     private readonly ITravelAgentSubscriptionRepo _taSubscriptionRepo;
     private readonly IApplicationUserService _appUserRepo;
+    private readonly ITravelAgentSubscriptionService _travelAgentSubscriptionService;
 
     public TravelAgentSubscriptionController(ITravelAgentSubscriptionRepo taSubscriptionRepo,
                                              IApplicationUserService appUserRepo,
-                                             IGenericRepo<TravelAgentSubscription, Guid> repo) : base(repo)
+                                             IGenericRepo<TravelAgentSubscription, Guid> repo,
+                                             ITravelAgentSubscriptionService travelAgentSubscriptionService) : base(repo)
     {
         _taSubscriptionRepo = taSubscriptionRepo;
         _appUserRepo = appUserRepo;
+        _travelAgentSubscriptionService = travelAgentSubscriptionService;
     }
 
     [HttpGet("{travelAgentId}")]
@@ -35,7 +38,7 @@ public class TravelAgentSubscriptionController : ApplicationControllerBase<Trave
         {
             return StatusCode(StatusCodes.Status403Forbidden);
         }
-        var sub = await _taSubscriptionRepo.CreateAsync(travelAgentId, paidServiceId);
+        var sub = await _travelAgentSubscriptionService.CreateAsync(travelAgentId, paidServiceId);
         return CreatedAtAction(nameof(Create), sub.Id);
     }
 
