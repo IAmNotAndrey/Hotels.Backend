@@ -8,18 +8,21 @@ public class PartnerController : ControllerBase
 
     private readonly UserManager<Partner> _userManager;
     private readonly IPartnerRepo _partnerRepo;
-    private readonly IApplicationUserRepo _appUserRepo;
+    private readonly IApplicationUserService _appUserRepo;
     private readonly IGenericRepo<Partner, string> _partnerGenRepo;
+    private readonly IPartnerService _partnerService;
 
     public PartnerController(UserManager<Partner> userManager,
                              IPartnerRepo partnerRepo,
-                             IApplicationUserRepo appUserRepo,
-                             IGenericRepo<Partner, string> partnerGenRepo)
+                             IApplicationUserService appUserRepo,
+                             IGenericRepo<Partner, string> partnerGenRepo,
+                             IPartnerService partnerService)
     {
         _userManager = userManager;
         _partnerRepo = partnerRepo;
         _appUserRepo = appUserRepo;
         _partnerGenRepo = partnerGenRepo;
+        _partnerService = partnerService;
     }
 
     /// <summary>
@@ -102,11 +105,11 @@ public class PartnerController : ControllerBase
             return StatusCode(StatusCodes.Status403Forbidden);
         }
         // Validation
-        if (!_partnerRepo.IsValidForModeration(await _partnerRepo.GetIncludedAsync(id), out var validationErrors))
+        if (!_partnerService.IsValidForModeration(await _partnerRepo.GetIncludedAsync(id), out var validationErrors))
         {
             return BadRequest(new { Errors = validationErrors });
         }
-        await _partnerRepo.SetToModerateAsync(id);
+        await _partnerService.SetToModerateAsync(id);
         return Ok();
     }
 }

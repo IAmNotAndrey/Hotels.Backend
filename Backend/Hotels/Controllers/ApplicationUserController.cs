@@ -4,10 +4,10 @@
 [ApiController]
 public class ApplicationUserController : ControllerBase
 {
-    private readonly IApplicationUserRepo _userRepo;
+    private readonly IApplicationUserService _userRepo;
     private readonly IGenericRepo<ApplicationUser, string> _repo;
 
-    public ApplicationUserController(IApplicationUserRepo userRepo, IGenericRepo<ApplicationUser, string> repo)
+    public ApplicationUserController(IApplicationUserService userRepo, IGenericRepo<ApplicationUser, string> repo)
     {
         _userRepo = userRepo;
         _repo = repo;

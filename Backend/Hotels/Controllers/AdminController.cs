@@ -7,12 +7,15 @@ public class AdminController : ControllerBase
 {
     private readonly IAdminRepo _adminRepo;
     private readonly IGenericRepo<ApplicationUser, string> _appUserRepo;
+    private readonly IAdminService _adminService;
 
     public AdminController(IAdminRepo adminRepo,
-                           IGenericRepo<ApplicationUser, string> appUserRepo)
+                           IGenericRepo<ApplicationUser, string> appUserRepo,
+                           IAdminService adminService)
     {
         _adminRepo = adminRepo;
         _appUserRepo = appUserRepo;
+        _adminService = adminService;
     }
 
     [HttpGet]
@@ -40,7 +43,7 @@ public class AdminController : ControllerBase
         {
             return BadRequest($"{nameof(ApplicationUser)} is not {nameof(AccountStatus.OnModeration)}.");
         }
-        await _adminRepo.ConfirmModerationAsync(userId);
+        await _adminService.ConfirmModerationAsync(userId);
         return Ok();
     }
 }

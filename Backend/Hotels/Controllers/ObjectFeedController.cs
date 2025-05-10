@@ -4,13 +4,13 @@
 [ApiController]
 public class ObjectFeedController : ApplicationControllerBase<ObjectFeed, Guid, ObjectFeedDto, ObjectFeedDtoB>
 {
-    private readonly IApplicationUserRepo _appUserRepo;
+    private readonly IApplicationUserService _appUserRepo;
     private readonly IGenericRepo<Partner, string> _partnerRepo;
-    private readonly IObjectFeedRepo _objectFeedController;
+    private readonly IObjectFeedService _objectFeedController;
 
-    public ObjectFeedController(IApplicationUserRepo appUserRepo,
+    public ObjectFeedController(IApplicationUserService appUserRepo,
                                 IGenericRepo<Partner, string> partnerRepo,
-                                IObjectFeedRepo objectFeedController,
+                                IObjectFeedService objectFeedController,
                                 IGenericRepo<ObjectFeed, Guid> repo) : base(repo)
     {
         _appUserRepo = appUserRepo;

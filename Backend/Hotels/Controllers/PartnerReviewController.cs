@@ -5,12 +5,12 @@
 public class PartnerReviewController : ApplicationControllerBase<PartnerReview, Guid, PartnerReviewDto, PartnerReviewDtoB>
 {
     private readonly IReviewRepo _reviewRepo;
-    private readonly IApplicationUserRepo _appUserRepo;
+    private readonly IApplicationUserService _appUserRepo;
     private readonly IGenericRepo<Partner, string> _partnerRepo;
     private readonly IGenericRepo<Tourist, string> _touristRepo;
 
     public PartnerReviewController(IReviewRepo reviewRepo,
-                            IApplicationUserRepo appUserRepo,
+                            IApplicationUserService appUserRepo,
                             IGenericRepo<Partner, string> partnerRepo,
                             IGenericRepo<Tourist, string> touristRepo,
                             IGenericRepo<PartnerReview, Guid> repo) : base(repo)

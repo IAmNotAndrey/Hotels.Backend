@@ -4,13 +4,13 @@
 [ApiController]
 public class SubobjectComfortController : ApplicationControllerBase<SubobjectComfort, Guid, SubobjectComfortDto, SubobjectComfortDtoB>
 {
-    private readonly IApplicationUserRepo _appUserRepo;
+    private readonly IApplicationUserService _appUserRepo;
     private readonly IGenericRepo<Subobject, Guid> _subobjectRepo;
-    private readonly ISubobjectComfortRepo _subobjectComfortRepo;
+    private readonly ISubobjectComfortService _subobjectComfortRepo;
 
-    public SubobjectComfortController(IApplicationUserRepo appUserRepo,
+    public SubobjectComfortController(IApplicationUserService appUserRepo,
                                       IGenericRepo<Subobject, Guid> subobjectRepo,
-                                      ISubobjectComfortRepo subobjectComfortRepo,
+                                      ISubobjectComfortService subobjectComfortRepo,
                                       IGenericRepo<SubobjectComfort, Guid> repo) : base(repo)
     {
         _appUserRepo = appUserRepo;

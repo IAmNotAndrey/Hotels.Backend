@@ -4,21 +4,24 @@
 [ApiController]
 public class NearbyController : ApplicationControllerBase<Nearby, Guid, NearbyDto, NearbyDtoB>
 {
-    private readonly IApplicationUserRepo _appUserRepo;
+    private readonly IApplicationUserService _appUserRepo;
     private readonly INearbyRepo _nearbyRepo;
     private readonly IGenericRepo<CountrySubject, Guid> _countrySubjectRepo;
     private readonly IGenericRepo<Partner, string> _partnerRepo;
+    private readonly INearbyService _nearbyService;
 
-    public NearbyController(IApplicationUserRepo appUserRepo,
+    public NearbyController(IApplicationUserService appUserRepo,
                             IGenericRepo<Nearby, Guid> repo,
                             INearbyRepo nearbyRepo,
                             IGenericRepo<CountrySubject, Guid> countrySubjectRepo,
-                            IGenericRepo<Partner, string> partnerRepo) : base(repo)
+                            IGenericRepo<Partner, string> partnerRepo,
+                            INearbyService nearbyService) : base(repo)
     {
         _appUserRepo = appUserRepo;
         _nearbyRepo = nearbyRepo;
         _countrySubjectRepo = countrySubjectRepo;
         _partnerRepo = partnerRepo;
+        _nearbyService = nearbyService;
     }
 
     [HttpGet]
@@ -71,7 +74,7 @@ public class NearbyController : ApplicationControllerBase<Nearby, Guid, NearbyDt
         }
         try
         {
-            await _nearbyRepo.LinkAsync(partnerId, nearbyId);
+            await _nearbyService.LinkAsync(partnerId, nearbyId);
         }
         catch (InvalidOperationException ex)
         {
@@ -99,7 +102,7 @@ public class NearbyController : ApplicationControllerBase<Nearby, Guid, NearbyDt
         }
         try
         {
-            await _nearbyRepo.UninkAsync(partnerId, nearbyId);
+            await _nearbyService.UninkAsync(partnerId, nearbyId);
         }
         catch (InvalidOperationException ex)
         {

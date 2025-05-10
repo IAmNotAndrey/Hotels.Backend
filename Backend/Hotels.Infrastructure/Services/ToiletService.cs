@@ -1,16 +1,16 @@
-﻿using Hotels.Domain.Entities;
+﻿using Hotels.Application.Interfaces.Services;
+using Hotels.Domain.Entities;
 using Hotels.Domain.Entities.Subobjects;
 using Hotels.Persistence.Contexts;
-using Hotels.Persistence.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace Hotels.Persistence.Repositories;
+namespace Hotels.Infrastructure.Services;
 
-public class ToiletRepo : IToiletRepo
+public class ToiletService : IToiletService
 {
     private readonly ApplicationContext _db;
 
-    public ToiletRepo(ApplicationContext db)
+    public ToiletService(ApplicationContext db)
     {
         _db = db;
     }

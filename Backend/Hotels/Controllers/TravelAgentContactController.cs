@@ -4,10 +4,10 @@
 [ApiController]
 public class TravelAgentContactController : ApplicationControllerBase<ApplicationObjectContact, Guid, ApplicationObjectContactDto, ApplicationObjectContactDtoB>
 {
-    private readonly IApplicationUserRepo _appUserRepo;
+    private readonly IApplicationUserService _appUserRepo;
     private readonly IGenericRepo<ApplicationObject, string> _appObjectRepo;
 
-    public TravelAgentContactController(IApplicationUserRepo appUserRepo,
+    public TravelAgentContactController(IApplicationUserService appUserRepo,
                                         IGenericRepo<ApplicationObject, string> appObjectRepo,
                                         IGenericRepo<ApplicationObjectContact, Guid> repo) : base(repo)
     {

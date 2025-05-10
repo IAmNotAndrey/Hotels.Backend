@@ -15,9 +15,4 @@ public interface IPartnerRepo
     Task<IEnumerable<PartnerDto>> GetDtosIncludedPromoSeriesAsync(Guid countrySubjectId);
 
     Task UpdateAsync(string id, PartnerDtoB dtoB);
-    Task SetToModerateAsync(string id);
-    /// <summary>
-    /// Проверяет, заполнен ли Partner необходимыми данными для отправки на модерацию
-    /// </summary>
-    bool IsValidForModeration(Partner partner, out List<string> validationErrors);
 }

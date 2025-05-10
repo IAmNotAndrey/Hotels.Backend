@@ -1,14 +1,14 @@
 ﻿using Hotels.Application.Exceptions;
 
-namespace Hotels.Persistence.Interfaces.Repositories;
+namespace Hotels.Application.Interfaces.Services;
 
-public interface IBathroomRepo
+public interface IObjectComfortService
 {
     /// <exception cref="EntityNotFoundException"></exception>
     /// <exception cref="InvalidOperationException"></exception>
-    Task LinkAsync(Guid subobjectId, Guid bathroomId);
+    Task LinkAsync(string partnerId, Guid objectComfortId);
 
     /// <exception cref="EntityNotFoundException"></exception>
     /// <exception cref="InvalidOperationException"></exception>
-    Task UnlinkAsync(Guid subobjectId, Guid bathroomId);
+    Task UnlinkAsync(string partnerId, Guid objectComfortId);
 }

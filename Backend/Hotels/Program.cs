@@ -1,4 +1,5 @@
 using Hotels.Application.Mappings;
+using Hotels.Infrastructure.Extensions;
 using Hotels.Infrastructure.Factories;
 using Hotels.Persistence.Extensions;
 using Hotels.Persistence.Interfaces;

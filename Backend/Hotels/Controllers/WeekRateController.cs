@@ -5,12 +5,12 @@
 public class WeekRateController : ApplicationControllerBase<SubobjectWeekRate, Guid, SubobjectWeekRateDto, SubobjectWeekRateDtoB>
 {
     private readonly ApplicationContext _db;
-    private readonly IApplicationUserRepo _appUserRepo;
+    private readonly IApplicationUserService _appUserRepo;
     private readonly IWeekRateRepo _weekRateRepo;
     private readonly IGenericRepo<Subobject, Guid> _subobjectRepo;
 
     public WeekRateController(ApplicationContext db,
-                              IApplicationUserRepo appUserRepo,
+                              IApplicationUserService appUserRepo,
                               IWeekRateRepo weekRateRepo,
                               IGenericRepo<Subobject, Guid> subobjectRepo,
                               IGenericRepo<SubobjectWeekRate, Guid> repo) : base(repo)

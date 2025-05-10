@@ -5,11 +5,11 @@
 public class HousingController : ApplicationControllerBase<Housing, Guid, HousingDto, HousingDtoB>
 {
     private readonly IHousingRepo _housingRepo;
-    private readonly IApplicationUserRepo _appUserRepo;
+    private readonly IApplicationUserService _appUserRepo;
     private readonly IGenericRepo<Partner, string> _partnerRepo;
 
     public HousingController(IHousingRepo housingRepo,
-                             IApplicationUserRepo appUserRepo,
+                             IApplicationUserService appUserRepo,
                              IGenericRepo<Housing, Guid> repo,
                              IGenericRepo<Partner, string> partnerRepo) : base(repo)
     {

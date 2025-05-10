@@ -8,10 +8,10 @@ public class ImageController : ControllerBase
 
     private readonly ApplicationContext _db;
     private readonly IImageStorageRepo _imageStorageRepo;
-    private readonly IApplicationUserRepo _appUserRepo;
+    private readonly IApplicationUserService _appUserRepo;
     private readonly IImageRepo _imageRepo;
 
-    public ImageController(ApplicationContext db, IImageStorageRepo imageStorageRepo, IApplicationUserRepo appUserRepo, IImageRepo imageRepo)
+    public ImageController(ApplicationContext db, IImageStorageRepo imageStorageRepo, IApplicationUserService appUserRepo, IImageRepo imageRepo)
     {
         _db = db;
         _imageStorageRepo = imageStorageRepo;

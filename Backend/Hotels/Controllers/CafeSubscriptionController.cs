@@ -7,15 +7,18 @@ public class CafeSubscriptionController : ApplicationControllerBase<CafeSubscrip
     private readonly ICafeSubscriptionRepo _cafeSubRepo;
     private readonly IGenericRepo<Cafe, Guid> _cafeRepo;
     private readonly IGenericRepo<CafeTimeLimitedPaidService, Guid> _cafeTLPSRepo;
+    private readonly ICafeSubscriptionService _cafeSubscriptionService;
 
     public CafeSubscriptionController(ICafeSubscriptionRepo cafeSubRepo,
                                       IGenericRepo<Cafe, Guid> cafeRepo,
                                       IGenericRepo<CafeTimeLimitedPaidService, Guid> cafeTLPSRepo,
-                                      IGenericRepo<CafeSubscription, Guid> repo) : base(repo)
+                                      IGenericRepo<CafeSubscription, Guid> repo,
+                                      ICafeSubscriptionService cafeSubscriptionService) : base(repo)
     {
         _cafeSubRepo = cafeSubRepo;
         _cafeRepo = cafeRepo;
         _cafeTLPSRepo = cafeTLPSRepo;
+        _cafeSubscriptionService = cafeSubscriptionService;
     }
 
     [HttpGet("{cafeId:guid}")]
@@ -42,7 +45,7 @@ public class CafeSubscriptionController : ApplicationControllerBase<CafeSubscrip
         {
             return NotFound($"{nameof(CafeTimeLimitedPaidService)} wasn't found.");
         }
-        var sub = await _cafeSubRepo.CreateAsync(cafeId, paidServiceId);
+        var sub = await _cafeSubscriptionService.CreateAsync(cafeId, paidServiceId);
         return CreatedAtAction(nameof(Create), sub.Id);
     }
 

@@ -1,6 +1,5 @@
 ﻿using Hotels.Domain.Entities.Subobjects;
 using Hotels.Domain.Enums;
-using Hotels.Presentation.Attributes;
 using Hotels.Presentation.Interfaces;
 using System.Linq.Expressions;
 using System.Text.Json.Serialization;

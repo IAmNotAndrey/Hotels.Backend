@@ -4,19 +4,21 @@
 [ApiController]
 public class StaticFileController : ControllerBase
 {
-    private readonly ICafeRepo _cafeRepo;
+    private readonly ICafeService _cafeRepo;
     private readonly IGenericRepo<CafeMenuFileLink, Guid> _cafeMenuFileLinkRepo;
     private readonly INearbyRepo _nearbyRepo;
     private readonly IGenericRepo<Nearby, Guid> _genNearbyRepo;
     private readonly IGenericRepo<Cafe, Guid> _genCafeRepo;
     private readonly IGenericRepo<NearbyImageLink, Guid> _nearbyImageLinkRepo;
+    private readonly INearbyService _nearbyService;
 
-    public StaticFileController(ICafeRepo cafeRepo,
+    public StaticFileController(ICafeService cafeRepo,
                                 IGenericRepo<CafeMenuFileLink, Guid> cafeMenuFileLinkRepo,
                                 INearbyRepo nearbyRepo,
                                 IGenericRepo<Nearby, Guid> genNearbyRepo,
                                 IGenericRepo<Cafe, Guid> genCafeRepo,
-                                IGenericRepo<NearbyImageLink, Guid> nearbyImageLinkRepo)
+                                IGenericRepo<NearbyImageLink, Guid> nearbyImageLinkRepo,
+                                INearbyService nearbyService)
     {
         _cafeRepo = cafeRepo;
         _cafeMenuFileLinkRepo = cafeMenuFileLinkRepo;
@@ -24,6 +26,7 @@ public class StaticFileController : ControllerBase
         _genNearbyRepo = genNearbyRepo;
         _genCafeRepo = genCafeRepo;
         _nearbyImageLinkRepo = nearbyImageLinkRepo;
+        _nearbyService = nearbyService;
     }
 
     [HttpPost("{cafeId:guid}")]
@@ -58,7 +61,7 @@ public class StaticFileController : ControllerBase
         {
             return NotFound($"{nameof(Nearby)} wasn't found by id '{nearbyId}'");
         }
-        await _nearbyRepo.SetImageLinkAsync(nearbyId, image);
+        await _nearbyService.SetImageLinkAsync(nearbyId, image);
         return Ok();
     }
 

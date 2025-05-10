@@ -1,13 +1,14 @@
-﻿using Hotels.Domain.Entities;
+﻿using Hotels.Application.Interfaces.Services;
+using Hotels.Domain.Entities;
 using Hotels.Persistence.Interfaces.Repositories;
 
-namespace Hotels.Persistence.Repositories;
+namespace Hotels.Infrastructure.Services;
 
-public class BookingRepo : IBookingRepo
+public class BookingService : IBookingService
 {
     private readonly IGenericRepo<Booking, Guid> _repo;
 
-    public BookingRepo(IGenericRepo<Booking, Guid> repo)
+    public BookingService(IGenericRepo<Booking, Guid> repo)
     {
         _repo = repo;
     }

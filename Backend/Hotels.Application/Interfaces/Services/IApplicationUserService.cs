@@ -1,9 +1,9 @@
 ﻿using Hotels.Application.Exceptions;
 using System.Security.Claims;
 
-namespace Hotels.Persistence.Interfaces.Repositories;
+namespace Hotels.Application.Interfaces.Services;
 
-public interface IApplicationUserRepo
+public interface IApplicationUserService
 {
     /// <summary>
     /// Checks whether <paramref name="user"/>.Id == <paramref name="idToCompare"/>
