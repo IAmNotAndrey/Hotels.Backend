@@ -1,17 +1,18 @@
-﻿using Hotels.Domain.Entities.Comforts;
+﻿using Hotels.Application.Interfaces.Services;
+using Hotels.Domain.Entities.Comforts;
 using Hotels.Domain.Entities.Users;
 using Hotels.Persistence.Contexts;
 using Hotels.Persistence.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace Hotels.Persistence.Repositories;
+namespace Hotels.Infrastructure.Services;
 
-public class ObjectComfortRepo : IObjectComfortRepo
+public class ObjectComfortService : IObjectComfortService
 {
     private readonly ApplicationContext _db;
     private readonly IGenericRepo<ObjectComfort, Guid> _objectComfortGenRepo;
 
-    public ObjectComfortRepo(ApplicationContext db,
+    public ObjectComfortService(ApplicationContext db,
                              IGenericRepo<ObjectComfort, Guid> objectComfortGenRepo)
     {
         _db = db;
