@@ -33,7 +33,11 @@ public class AdminService : IAdminService
     public async Task CreateAsync(string email, string password)
     {
         Admin admin = new() { Email = email, EmailConfirmed = true };
-        await _userManager.CreateAsync(admin, password);
+        IdentityResult identityResult = await _userManager.CreateAsync(admin, password);
+        if (!identityResult.Succeeded)
+        {
+            throw new InvalidOperationException($"User manager has thrown following errors when creating an Admin: {identityResult.Errors}");
+        }
     }
 
     public async Task DeleteAsync(string id)
