@@ -1,5 +1,4 @@
-﻿using Hotels.Application.Exceptions;
-using Hotels.Application.Interfaces.Services;
+﻿using Hotels.Application.Interfaces.Services;
 using Hotels.Domain.Entities.Users;
 using Hotels.Domain.Enums;
 using Hotels.Persistence.Contexts;
@@ -20,14 +19,15 @@ public class PartnerService : IPartnerService
 
     public async Task SetToModerateAsync(string id)
     {
-        Partner partner = await _repo.GetByIdOrDefaultAsync(id, asNoTracking: false)
-            ?? throw new EntityNotFoundException($"{nameof(Partner)} wasn't found");
+        Partner partner = await _repo.GetByIdAsync(id, asNoTracking: false);
         partner.AccountStatus = AccountStatus.OnModeration;
         await _db.SaveChangesAsync();
     }
 
     public bool IsValidForModeration(Partner partner, out List<string> validationErrors)
     {
+        ArgumentNullException.ThrowIfNull(partner);
+
         // fixme неправильная валидация
         validationErrors = [];
 
@@ -43,10 +43,6 @@ public class PartnerService : IPartnerService
         if (partner.CityId == null)
         {
             validationErrors.Add($"{nameof(partner.CityId)} is required.");
-        }
-        if (partner.TypeId == null)
-        {
-            validationErrors.Add($"At least one of {nameof(partner.Contacts)} is required.");
         }
         if (partner.Contacts.Count == 0)
         {
