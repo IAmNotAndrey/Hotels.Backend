@@ -1,11 +1,7 @@
 ﻿using Hotels.Infrastructure.Services;
-using MailKit;
-using MailKit.Net.Smtp;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using MimeKit;
 using Moq;
-using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace Hotels.Unit.Tests.Services;
 
