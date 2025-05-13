@@ -129,7 +129,7 @@ public class BookingController : ApplicationControllerBase<Booking, Guid, Bookin
     /// Получает все 'Bookings', у 'Partner.Subobjects' где есть пересечения с интервалом (dateIn, dateOut)
     /// </summary>
     [HttpPost("{subobjectId}")]
-    public async Task<ActionResult<List<BookingDto>>> GetSubobjectsBookings(Guid subobjectId, [FromForm] DateOnly dateIn, DateOnly dateOut)
+    public async Task<ActionResult<List<BookingDto>>> GetSubobjectsBookings(Guid subobjectId, [FromForm] DateOnly dateIn, [FromForm] DateOnly dateOut)
     {
         Subobject subobject = await _db.Subobjects.FirstAsync(p => p.Id == subobjectId);
         List<BookingDto> bookingDtos = subobject.Bookings
