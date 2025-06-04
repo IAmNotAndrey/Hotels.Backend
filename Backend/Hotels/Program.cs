@@ -124,6 +124,11 @@ var app = builder.Build();
 #if DEBUG
 using (var scope = app.Services.CreateScope())
 {
+    // FIXME
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
+
+    context.Database.EnsureCreated();
+
     var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
     await dbInitializer.InitializeAsync(); // ����� �������������� ���� ������
 }

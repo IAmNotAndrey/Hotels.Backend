@@ -1,21 +1,30 @@
 ﻿using Hotels.Application.Exceptions;
-using Hotels.Application.Interfaces.Services;
+using Hotels.Bookings.Infrastructure.Services;
+using Hotels.Bookings.Persistence.Interfaces.Repositories;
 using Hotels.Domain.Entities;
-using Hotels.Infrastructure.Services;
-using Hotels.Persistence.Interfaces.Repositories;
+using Hotels.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 
 namespace Hotels.Unit.Tests.Services;
 
 public class BookingServiceTests
 {
-    private readonly Mock<IGenericRepo<Booking, Guid>> _mockRepo;
-    private readonly IBookingService _bookingService;
+    private readonly Mock<IGenericRepo<Booking, Guid>> _mockBookingGenericRepo = new();
+    private readonly Mock<IBookingRepo> _mockBookingRepo = new();
+
+    private readonly BookingService _bookingService;
 
     public BookingServiceTests()
     {
-        _mockRepo = new Mock<IGenericRepo<Booking, Guid>>();
-        _bookingService = new BookingService(_mockRepo.Object);
+        var options = new DbContextOptionsBuilder<ApplicationContext>()
+        .UseInMemoryDatabase(databaseName: "Test_Database")
+        .Options;
+
+        _bookingService = new BookingService(
+            _mockBookingGenericRepo.Object,
+            _mockBookingRepo.Object
+        );
     }
 
     [Theory]
@@ -38,11 +47,11 @@ public class BookingServiceTests
             DateOut = DateOnly.Parse("2023-10-15")
         };
 
-        _mockRepo.Setup(repo => repo.GetByIdAsync(bookingId, true))
+        _mockBookingGenericRepo.Setup(repo => repo.GetByIdAsync(bookingId, true))
             .ReturnsAsync(existingBooking);
 
         // Act
-        var result = await _bookingService.HasBookingConflictAsync(
+        var result = await _bookingService.HasBookingConflictWithBookingAsync(
             bookingId,
             DateOnly.Parse(newStartStr),
             DateOnly.Parse(newEndStr));
@@ -68,11 +77,11 @@ public class BookingServiceTests
             DateOut = DateOnly.Parse("2023-10-15")
         };
 
-        _mockRepo.Setup(repo => repo.GetByIdAsync(bookingId, true))
+        _mockBookingGenericRepo.Setup(repo => repo.GetByIdAsync(bookingId, true))
             .ReturnsAsync(existingBooking);
 
         // Act
-        var result = await _bookingService.HasBookingConflictAsync(
+        var result = await _bookingService.HasBookingConflictWithBookingAsync(
             bookingId,
             DateOnly.Parse(newStartStr),
             DateOnly.Parse(newEndStr));
@@ -89,11 +98,11 @@ public class BookingServiceTests
         var newStartDate = new DateOnly(2023, 10, 6);
         var newEndDate = new DateOnly(2023, 10, 10);
 
-        _mockRepo.Setup(repo => repo.GetByIdAsync(bookingId, true))
+        _mockBookingGenericRepo.Setup(repo => repo.GetByIdAsync(bookingId, true))
             .ThrowsAsync(new EntityNotFoundException());
 
         // Act & Assert
         await Assert.ThrowsAsync<EntityNotFoundException>(() =>
-            _bookingService.HasBookingConflictAsync(bookingId, newStartDate, newEndDate));
+            _bookingService.HasBookingConflictWithBookingAsync(bookingId, newStartDate, newEndDate));
     }
 }

@@ -10,6 +10,7 @@ public static class RepositoryRegistration
     {
         services.AddTransient<IAdminRepo, AdminRepo>();
         services.AddTransient<IAttractionRepo, AttractionRepo>();
+        services.AddTransient<IBookingRepo, BookingRepo>();
         services.AddTransient<ICafeSubscriptionRepo, CafeSubscriptionRepo>();
         services.AddTransient<ICityRepo, CityRepo>();
         services.AddTransient<ICountrySubjectRepo, CountrySubjectRepo>();
@@ -26,6 +27,7 @@ public static class RepositoryRegistration
         services.AddTransient<ITravelAgentRepo, TravelAgentRepo>();
         services.AddTransient<ITravelAgentSubscriptionRepo, TravelAgentSubscriptionRepo>();
         services.AddTransient<IWeekRateRepo, WeekRateRepo>();
+        services.AddTransient<ISubobjectRepo, SubobjectRepo>();
 
         return services;
     }

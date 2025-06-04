@@ -71,7 +71,7 @@ public class ApplicationContext : IdentityDbContext<ApplicationUser>
 
 
     public virtual DbSet<ApplicationNamedEntity> ApplicationBaseEntities { get; init; }
-    public virtual DbSet<Booking> Bookings { get; init; }
+    public virtual DbSet<Booking> Bookings { get; init; } // TODO : Remove
     public virtual DbSet<Nearby> Nearbies { get; init; }
     public virtual DbSet<Attraction> Attractions { get; init; }
     public virtual DbSet<Cafe> Cafes { get; init; }
@@ -102,7 +102,7 @@ public class ApplicationContext : IdentityDbContext<ApplicationUser>
         _staticFilesService = staticFilesService;
 
         //Database.EnsureDeleted();
-        Database.EnsureCreated();
+        //Database.EnsureCreated();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

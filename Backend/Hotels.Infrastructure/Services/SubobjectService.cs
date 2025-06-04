@@ -9,12 +9,10 @@ namespace Hotels.Infrastructure.Services;
 public class SubobjectService : ISubobjectService
 {
     private readonly ApplicationContext _db;
-    private readonly IBookingService _bookingRepo;
 
-    public SubobjectService(ApplicationContext db, IBookingService bookingRepo)
+    public SubobjectService(ApplicationContext db)
     {
         _db = db;
-        _bookingRepo = bookingRepo;
     }
 
     public async Task<decimal> CalculateBookingCostAsync(Guid subobjectId, DateOnly dateIn, DateOnly dateOut)
@@ -46,17 +44,5 @@ public class SubobjectService : ISubobjectService
         }
 
         return totalCost;
-    }
-
-    public async Task<bool> HasBookingConflictAsync(Guid subobjectId, DateOnly startDate, DateOnly endDate)
-    {
-        Subobject subobject = await _db.Subobjects
-            .Include(s => s.Bookings)
-            .AsNoTracking()
-            .FirstOrDefaultAsync(s => s.Id == subobjectId)
-            ?? throw new EntityNotFoundException($"{nameof(Subobject)} with Id {subobjectId} wasn't found");
-
-        // Проверяем, пересекаются ли новые даты с уже существующими
-        return subobject.Bookings.Any(b => _bookingRepo.HasBookingConflictAsync(b.Id, startDate, endDate).Result);
     }
 }

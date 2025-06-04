@@ -4,29 +4,29 @@
 [ApiController]
 public class BookingController : ApplicationControllerBase<Booking, Guid, BookingDto, BookingDtoB>
 {
-    private readonly ApplicationContext _db;
     private readonly IPaymentService<string> _paymentService;
     private readonly IMapper _mapper;
-    private readonly IApplicationUserService _appUserRepo;
-    private readonly ISubobjectService _subobjectRepo;
-    private readonly IBookingService _bookingRepo;
+    private readonly IApplicationUserService _appUserService;
+    private readonly ISubobjectService _subobjectService;
+    private readonly IBookingService _bookingService;
+    private readonly IBookingRepo _bookingRepo;
     private readonly IGenericRepo<Subobject, Guid> _genSubobjectRepo;
 
-    public BookingController(ApplicationContext db,
-                             IPaymentService<string> yooKassaService,
+    public BookingController(IPaymentService<string> yooKassaService,
                              IMapper mapper,
-                             IApplicationUserService appUserRepo,
-                             ISubobjectService subobjectRepo,
-                             IBookingService bookingRepo,
+                             IApplicationUserService appUserService,
+                             ISubobjectService subobjectService,
+                             IBookingService bookingService,
                              IGenericRepo<Subobject, Guid> genSubobjectRepo,
+                             IBookingRepo bookingRepo,
                              IGenericRepo<Booking, Guid> repo
                              ) : base(repo)
     {
-        _db = db;
         _paymentService = yooKassaService;
         _mapper = mapper;
-        _appUserRepo = appUserRepo;
-        _subobjectRepo = subobjectRepo;
+        _appUserService = appUserService;
+        _subobjectService = subobjectService;
+        _bookingService = bookingService;
         _bookingRepo = bookingRepo;
         _genSubobjectRepo = genSubobjectRepo;
     }
@@ -49,28 +49,18 @@ public class BookingController : ApplicationControllerBase<Booking, Guid, Bookin
             return NotFound($"{nameof(Subobject)} wasn't found.");
         }
         // Does the requester do an allowed operation?
-        if (!await _appUserRepo.IsUserAllowedAsync(User, dtoB.TouristId))
+        if (!await _appUserService.IsUserAllowedAsync(User, dtoB.TouristId))
         {
             return StatusCode(StatusCodes.Status403Forbidden);
         }
         // Prohibit booking if there are conflicting dates.
-        if (await _subobjectRepo.HasBookingConflictAsync(dtoB.SubobjectId, dtoB.DateIn, dtoB.DateOut))
+        if (await _bookingService.HasBookingConflictWithSubobjectAsync(dtoB.SubobjectId, dtoB.DateIn, dtoB.DateOut))
         {
             return BadRequest("There are conflicting date periods.");
         }
 
-        // Get the total cost of the reservation for the entire booking period.
-        decimal totalPrice = await _subobjectRepo.CalculateBookingCostAsync(dtoB.SubobjectId, dtoB.DateIn, dtoB.DateOut);
-
-        // Создаём бронь
         Booking booking = _mapper.Map<Booking>(dtoB);
-        // Создаём платёж ЮКасса
-        string paymentId = await _paymentService.CreatePaymentAsync(totalPrice); // BUG: не регистрируется платёж
-        booking.PaymentId = paymentId;
-
-        // Сохраняем бронь в БД
-        _db.Bookings.Add(booking);
-        await _db.SaveChangesAsync();
+        string paymentId = await _bookingService.BookAsync(booking);
 
         return Ok(paymentId);
     }
@@ -103,9 +93,8 @@ public class BookingController : ApplicationControllerBase<Booking, Guid, Bookin
         }
 
         // Если платёж не был оплачен, то удаляем бронь в БД
-        Booking booking = await _db.Bookings.FirstAsync(b => b.PaymentId == payment.Id);
-        _db.Bookings.Remove(booking);
-        await _db.SaveChangesAsync();
+        Booking booking = await _bookingRepo.GetByPaymentIdAsync(payment.Id);
+        await _repo.DeleteAsync(booking.Id);
 
         return Ok();
     }
@@ -116,11 +105,7 @@ public class BookingController : ApplicationControllerBase<Booking, Guid, Bookin
     [HttpPost("{partnerId}")]
     public async Task<ActionResult<List<SubobjectDto>>> GetBookedSubobjects(string partnerId, [FromForm] DateOnly dateIn, [FromForm] DateOnly dateOut)
     {
-        Partner partner = await _db.Partners.FirstAsync(p => p.Id == partnerId);
-        List<SubobjectDto> subobjectDtos = partner.Subobjects
-            .Where(s => _subobjectRepo.HasBookingConflictAsync(s.Id, dateIn, dateOut).Result)
-            .Select(s => _mapper.Map<SubobjectDto>(s))
-            .ToList();
+        var subobjectDtos = await _bookingService.GetBookedSubobjectDtosByPartnerIdAsync(partnerId, dateIn, dateOut);
 
         return Ok(subobjectDtos);
     }
@@ -129,13 +114,9 @@ public class BookingController : ApplicationControllerBase<Booking, Guid, Bookin
     /// Получает все 'Bookings', у 'Partner.Subobjects' где есть пересечения с интервалом (dateIn, dateOut)
     /// </summary>
     [HttpPost("{subobjectId}")]
-    public async Task<ActionResult<List<BookingDto>>> GetSubobjectsBookings(Guid subobjectId, [FromForm] DateOnly dateIn, [FromForm] DateOnly dateOut)
+    public async Task<ActionResult<IEnumerable<BookingDto>>> GetSubobjectsBookings(Guid subobjectId, [FromForm] DateOnly dateIn, [FromForm] DateOnly dateOut)
     {
-        Subobject subobject = await _db.Subobjects.FirstAsync(p => p.Id == subobjectId);
-        List<BookingDto> bookingDtos = subobject.Bookings
-            .Where(b => _bookingRepo.HasBookingConflictAsync(b.Id, dateIn, dateOut).Result)
-            .Select(b => _mapper.Map<BookingDto>(b))
-            .ToList();
+        var bookingDtos = await _bookingService.GetBookingDtosAsync(subobjectId, dateIn, dateOut);
 
         return Ok(bookingDtos);
     }

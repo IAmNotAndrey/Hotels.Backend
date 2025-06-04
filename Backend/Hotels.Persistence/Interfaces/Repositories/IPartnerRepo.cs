@@ -7,6 +7,7 @@ namespace Hotels.Persistence.Interfaces.Repositories;
 
 public interface IPartnerRepo
 {
+    Task<Partner> GetWithSubobjectsAsync(string id);
     Task<Partner> GetIncludedAsync(string id);
     Task<PartnerDto> GetDtoIncludedAsync(string id);
     Task<IEnumerable<PartnerDto>> GetAllDtosIncludedIncludeAsync();

@@ -28,6 +28,8 @@ public static class ServiceRegistration
         services.AddTransient<ITravelAgentSubscriptionService, TravelAgentSubscriptionService>();
         services.AddScoped<IPaymentService<string>, YooKassaService>();
 
+        services.AddHttpClient();
+
         return services;
     }
 }

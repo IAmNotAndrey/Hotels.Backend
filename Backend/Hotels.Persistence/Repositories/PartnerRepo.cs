@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Hotels.Application.Dtos.Users;
+using Hotels.Application.Exceptions;
 using Hotels.Domain.Entities.Users;
 using Hotels.Domain.Enums;
 using Hotels.Persistence.Contexts;
@@ -21,6 +22,14 @@ public class PartnerRepo : IPartnerRepo
         _db = db;
         _repo = repo;
         _mapper = mapper;
+    }
+
+    public async Task<Partner> GetWithSubobjectsAsync(string id)
+    {
+        return await _db.Set<Partner>()
+            .Include(p => p.Subobjects)
+            .FirstOrDefaultAsync(p => p.Id == id)
+            ?? throw new EntityNotFoundException($"{nameof(Partner)} with Id '{id}' not found");
     }
 
     public async Task<PartnerDto> GetDtoIncludedAsync(string id)
