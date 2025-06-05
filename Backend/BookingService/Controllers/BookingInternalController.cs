@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Hotels.BookingsService.Controllers;
 
 [ApiController]
-[Route("api/internal/v1/[controller]/[action]")]
+[Route("api/internal/v1/bookings/[action]")]
 public class BookingInternalController(IBookingRepo bookingRepo,
                                        BookingService bookingService) : ControllerBase
 {

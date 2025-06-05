@@ -1,0 +1,66 @@
+services:
+  hotels.apigateway:
+    container_name: apigateway
+    image: ${DOCKER_REGISTRY-}hotelsapigateway
+    build:
+      context: .
+      dockerfile: Hotels.ApiGateway/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    ports:
+      - "5001:8080"
+      - "5002:8081"
+
+
+  hotels.bookingsservice:
+    container_name: bookingsservice
+    image: ${DOCKER_REGISTRY-}hotelsbookingsservice
+    build:
+      context: .
+      dockerfile: BookingService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    ports:
+      - "5005:8080"
+      - "5006:8081"
+
+
+  hotels:
+    container_name: monolith
+    image: ${DOCKER_REGISTRY-}hotels
+    build:
+      context: .
+      dockerfile: Hotels/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    ports:
+      - "5003:8080"
+      - "5004:8081"
+
+
+  hotels.database:
+    container_name: hotels.database
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Keras2310!
+      POSTGRES_DB: hotels_db
+    volumes:
+      - ./.containers/hotels-db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
