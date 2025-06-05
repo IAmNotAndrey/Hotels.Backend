@@ -1,7 +1,8 @@
-using Hotels.Application.Interfaces.Services;
+﻿using Hotels.Application.Interfaces.Services;
 using Hotels.Application.Mappings;
 using Hotels.Bookings.Persistence.Interfaces.Repositories;
 using Hotels.Bookings.Persistence.Repositories;
+using Hotels.BookingsService;
 using Hotels.Infrastructure.Services;
 using Hotels.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -40,7 +41,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseAuthorization();
 app.MapControllers();
 

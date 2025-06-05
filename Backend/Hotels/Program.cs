@@ -11,6 +11,8 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
 string connection = builder.Configuration.GetConnectionString("DefaultConnection")!;
 string[] corsOrigins = builder.Configuration.GetSection("CorsOrigins").Get<string[]>()!;
 
