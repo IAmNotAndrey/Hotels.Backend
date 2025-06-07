@@ -2,6 +2,8 @@ services:
   hotels.apigateway:
     container_name: apigateway
     image: ${DOCKER_REGISTRY-}hotelsapigateway
+    depends_on:
+      - hotels.database
     build:
       context: .
       dockerfile: Hotels.ApiGateway/Dockerfile
@@ -20,6 +22,8 @@ services:
   hotels.bookingsservice:
     container_name: bookingsservice
     image: ${DOCKER_REGISTRY-}hotelsbookingsservice
+    depends_on:
+      - hotels.database
     build:
       context: .
       dockerfile: BookingService/Dockerfile
@@ -38,6 +42,8 @@ services:
   hotels:
     container_name: monolith
     image: ${DOCKER_REGISTRY-}hotels
+    depends_on:
+      - hotels.database
     build:
       context: .
       dockerfile: Hotels/Dockerfile
@@ -59,8 +65,5 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: Keras2310!
-      POSTGRES_DB: hotels_db
-    volumes:
-      - ./.containers/hotels-db:/var/lib/postgresql/data
     ports:
       - "5432:5432"

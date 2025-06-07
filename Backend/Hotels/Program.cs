@@ -63,7 +63,6 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationContext>()
     .AddDefaultTokenProviders();
-//.AddSignInManager<SignInManager<ApplicationUser>>();
 builder.Services.AddIdentityCore<Partner>(opt =>
 {
     opt.SignIn.RequireConfirmedEmail = true;
@@ -132,19 +131,15 @@ using (var scope = app.Services.CreateScope())
     context.Database.EnsureCreated();
 
     var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-    await dbInitializer.InitializeAsync(); // ����� �������������� ���� ������
+    await dbInitializer.InitializeAsync();
 }
 #endif
 
 app.UseCors("CorsPolicy");
-app.UseMiddleware<ExceptionHandlerMiddleware>(); // ���������� ��������� ����������
-app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-//app.MapControllerRoute(
-//	name: "default",
-//	pattern: "api/v1/{controller}/{action}"); // ��������� ������� ��� ���� ������������
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseSwaggerUI(options =>
