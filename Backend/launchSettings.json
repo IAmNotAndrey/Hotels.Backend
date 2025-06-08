@@ -6,7 +6,8 @@
       "serviceActions": {
         "hotels.apigateway": "StartDebugging",
         "hotels.bookingsservice": "StartDebugging",
-        "hotels": "StartDebugging"
+        "hotels": "StartDebugging",
+        "hotels.partnerreviews": "StartDebugging"
       }
     }
   }

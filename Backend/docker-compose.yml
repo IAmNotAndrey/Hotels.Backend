@@ -59,6 +59,26 @@ services:
       - "5004:8081"
 
 
+  hotels.partnerreviews:
+    container_name: partner_reviews_service
+    image: ${DOCKER_REGISTRY-}hotelspartnerreviews
+    depends_on:
+      - hotels.database
+    build:
+      context: .
+      dockerfile: Hotels.PartnerReviews/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    ports:
+      - "5007:8080"
+      - "5008:8081"
+
+
   hotels.database:
     container_name: hotels.database
     image: postgres:latest
@@ -67,3 +87,13 @@ services:
       POSTGRES_PASSWORD: Keras2310!
     ports:
       - "5432:5432"
+
+
+  hotels.partnerreviews.db:
+    container_name: partner_reviews_database
+    image: mongo:latest
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: mongo
+        MONGO_INITDB_ROOT_PASSWORD: Keras2310!
+    ports:
+      - "8081:8081"
