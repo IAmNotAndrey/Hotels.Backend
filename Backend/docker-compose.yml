@@ -89,6 +89,16 @@ services:
       - "5432:5432"
 
 
+  hotels.bookingsservice.database:
+    container_name: hotels.bookingsservice.database
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Keras2310!
+    ports:
+      - "5440:5432"
+
+
   hotels.partnerreviews.db:
     container_name: partner_reviews_database
     image: mongo:latest
