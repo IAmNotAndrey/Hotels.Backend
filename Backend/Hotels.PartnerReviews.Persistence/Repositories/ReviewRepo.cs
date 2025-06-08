@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Hotels.Application.Dtos.Reviews;
+using Hotels.Application.Exceptions;
 using Hotels.Domain.Entities.Reviews;
 using Hotels.PartnerReviews.Persistence.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,8 @@ public class ReviewRepo(IMapper mapper, IGenericRepo<PartnerReview, Guid> repo) 
 {
     public async Task<PartnerReviewDto> GetDtoIncludedAsync(Guid id)
     {
-        PartnerReview review = await IncludeRelations(repo.Entities).FirstAsync(e => e.Id == id);
+        PartnerReview review = await IncludeRelations(repo.Entities).FirstOrDefaultAsync(e => e.Id == id)
+            ?? throw new EntityNotFoundException();
         return mapper.Map<PartnerReviewDto>(review);
     }
 

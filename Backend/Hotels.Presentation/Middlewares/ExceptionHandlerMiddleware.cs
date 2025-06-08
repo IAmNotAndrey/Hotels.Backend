@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 using System.Net;
-using System.Text.Json;
 
 namespace Hotels.Presentation.Middlewares;
 
@@ -60,8 +59,6 @@ public class ExceptionHandlerMiddleware
             StatusCode = (int)statusCode
         };
 
-        string result = JsonSerializer.Serialize(errorDto);
-
-        await response.WriteAsJsonAsync(result);
+        await response.WriteAsJsonAsync(errorDto);
     }
 }

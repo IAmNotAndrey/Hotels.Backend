@@ -1,4 +1,5 @@
-﻿using Hotels.Bookings.Persistence.Interfaces.Repositories;
+﻿using Hotels.Application.Exceptions;
+using Hotels.Bookings.Persistence.Interfaces.Repositories;
 using Hotels.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,8 @@ public class BookingRepo(DbContext db
     {
         return await db.Set<Booking>()
             .AsNoTracking()
-            .FirstAsync(b => b.PaymentId == paymentId);
+            .FirstOrDefaultAsync(b => b.PaymentId == paymentId)
+            ?? throw new EntityNotFoundException($"{nameof(Booking)} with PaymentId '{paymentId}' not found");
     }
 
     public async Task<IReadOnlyList<Booking>> GetBookingsBySubobjectIdAsync(Guid sbobjectId)

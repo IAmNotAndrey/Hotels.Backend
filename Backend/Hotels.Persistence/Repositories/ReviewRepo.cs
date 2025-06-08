@@ -31,7 +31,7 @@ public class ReviewRepo : IReviewRepo
     {
         string url = Guard.Against.NullOrWhiteSpace(_configuration[ConfigGetDtoIncludedUrl]);
         url += id.ToString();
-        
+
         var response = await _httpClient.GetAsync(url);
 
         if (response.IsSuccessStatusCode)
@@ -77,7 +77,7 @@ public class ReviewRepo : IReviewRepo
 
         if (response.IsSuccessStatusCode)
         {
-            return await response.Content.ReadFromJsonAsync< IEnumerable<PartnerReviewDto>>()
+            return await response.Content.ReadFromJsonAsync<IEnumerable<PartnerReviewDto>>()
                 ?? throw new InvalidOperationException($"Failed to deserialize {nameof(PartnerReviewDto)}s");
         }
 

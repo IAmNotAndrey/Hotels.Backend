@@ -57,6 +57,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotels.PartnerReviews.Persi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotels.PartnerReviews.Infrastructure", "Hotels.PartnerReviews.Infrastructure\Hotels.PartnerReviews.Infrastructure.csproj", "{92DBD5CF-371A-4274-A213-1EE6E59183E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotels.Integration.Tests", "Hotels.Integration.Tests\Hotels.Integration.Tests.csproj", "{41C23B27-DBEE-4BE8-A751-C0EAEC868D33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +125,10 @@ Global
 		{92DBD5CF-371A-4274-A213-1EE6E59183E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92DBD5CF-371A-4274-A213-1EE6E59183E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92DBD5CF-371A-4274-A213-1EE6E59183E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41C23B27-DBEE-4BE8-A751-C0EAEC868D33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41C23B27-DBEE-4BE8-A751-C0EAEC868D33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41C23B27-DBEE-4BE8-A751-C0EAEC868D33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41C23B27-DBEE-4BE8-A751-C0EAEC868D33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -148,6 +154,7 @@ Global
 		{F02930D6-1041-4168-A1C5-FF34407742DE} = {1A35E525-AD36-4E4F-9ED5-16DAEDDB7420}
 		{D85CF151-B225-4951-AA5A-1177EA469627} = {F02930D6-1041-4168-A1C5-FF34407742DE}
 		{92DBD5CF-371A-4274-A213-1EE6E59183E4} = {F02930D6-1041-4168-A1C5-FF34407742DE}
+		{41C23B27-DBEE-4BE8-A751-C0EAEC868D33} = {61F7AFE4-FFE5-4854-BF0E-CA09C2A0EA1F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5612CE9C-9B79-426B-9881-F7274AE959DE}

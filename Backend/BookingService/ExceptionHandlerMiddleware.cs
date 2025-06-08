@@ -3,7 +3,6 @@ using Hotels.Application.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using System.Net;
-using System.Text.Json;
 
 namespace Hotels.BookingsService;
 
@@ -49,8 +48,6 @@ public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionH
             StatusCode = (int)statusCode
         };
 
-        string result = JsonSerializer.Serialize(errorDto);
-
-        await response.WriteAsJsonAsync(result);
+        await response.WriteAsJsonAsync(errorDto);
     }
 }

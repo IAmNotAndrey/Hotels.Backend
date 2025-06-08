@@ -5,7 +5,7 @@ namespace Hotels.PartnerReviews.Persistence.Contexts;
 
 public class PartnerReviewsContext : DbContext
 {
-    public virtual DbSet<PartnerReview> PartnerReviews { get; init; }
+    public virtual DbSet<PartnerReview> ObjectReviews { get; init; }
 
     public PartnerReviewsContext(DbContextOptions<PartnerReviewsContext> options) : base(options)
     {
