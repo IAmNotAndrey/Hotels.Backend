@@ -24,6 +24,7 @@ services:
     image: ${DOCKER_REGISTRY-}hotelsbookingsservice
     depends_on:
       - hotels.database
+      - hotels.bookingsservice.database
     build:
       context: .
       dockerfile: BookingService/Dockerfile
@@ -64,6 +65,7 @@ services:
     image: ${DOCKER_REGISTRY-}hotelspartnerreviews
     depends_on:
       - hotels.database
+      - hotels.partnerreviews.db
     build:
       context: .
       dockerfile: Hotels.PartnerReviews/Dockerfile
@@ -87,6 +89,16 @@ services:
       POSTGRES_PASSWORD: Keras2310!
     ports:
       - "5432:5432"
+
+
+  hotels.bookingsservice.database:
+    container_name: hotels.bookingsservice.database
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Keras2310!
+    ports:
+      - "5440:5432"
 
 
   hotels.partnerreviews.db:
